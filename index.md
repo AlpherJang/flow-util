@@ -1,37 +1,15 @@
-## Welcome to GitHub Pages
+## Welcome to Flow-util's Home Page
 
-You can use the [editor on GitHub](https://github.com/AlpherJang/flow-util/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## What
+流程控制工具主要提供了一个快速创建一个并发事务处理流的工具
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Define
+一个完成的过程称之为一个flow，每个flow应包含多个step，每个step可以包含一个或多个process，但是每个step将会起一个到多个协程
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+## Use
+```
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Contribute
+你可以通过Fork克隆一个库到个人空间，然后修改代码并通过pr提交merge request
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/AlpherJang/flow-util/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
