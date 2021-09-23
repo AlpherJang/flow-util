@@ -1,2 +1,4 @@
 # flow-util
-flow-util provide a method to create flow work quickly
+流程控制工具主要提供了一个快速创建一个并发事务处理流的工具
+## 定义
+一个完成的过程称之为一个flow，每个flow应包含多个step，每个step可以包含一个或多个process，但是每个step将会起一个到多个协程
