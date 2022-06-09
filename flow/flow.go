@@ -5,7 +5,11 @@ import (
 	"gopkg.eicas.io/common/go-pkg/flow-util/apis"
 )
 
-// Flow 描述完成流程，每个step都是按顺序写入到flow中，依次启动，数据并行处理串行流转
+// Flow
+// @Description describe whole work flow, all steps will set to flow follow there index,
+// and will start one by one, data will transfer by channel
+// @Author ZhangHao
+// @Date 2022-06-09 14:47:45
 type Flow struct {
 	stepList []apis.Step
 }
@@ -16,18 +20,27 @@ func NewFlow() *Flow {
 	}
 }
 
-// AddStep 添加步骤
+// AddStep
+// @Description add step into work flow
+// @Author ZhangHao
+// @Date 2022-06-09 14:49:23
 func (f *Flow) AddStep(step apis.Step) {
 	f.stepList = append(f.stepList, step)
 	glog.V(7).Infof("flow add step %s", step.Title())
 }
 
-// Count 统计总步骤
+// Count
+// @Description calculates all work steps in work flow
+// @Author ZhangHao
+// @Date 2022-06-09 14:49:45
 func (f *Flow) Count() int {
 	return len(f.stepList)
 }
 
-// Start 启动flow
+// Start
+// @Description start all steps in work flow
+// @Author ZhangHao
+// @Date 2022-06-09 14:50:20
 func (f *Flow) Start() apis.StepChan {
 	var stepChan apis.StepChan
 	for _, item := range f.stepList {
@@ -37,7 +50,10 @@ func (f *Flow) Start() apis.StepChan {
 	return stepChan
 }
 
-// Wait 等待flow执行完成
+// Wait
+// @Description wait work flow finish
+// @Author ZhangHao
+// @Date 2022-06-09 14:50:34
 func (f *Flow) Wait() {
 	for _, item := range f.stepList {
 		<-item.Done()
