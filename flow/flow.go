@@ -11,12 +11,12 @@ import (
 // @Author ZhangHao
 // @Date 2022-06-09 14:47:45
 type Flow struct {
-	stepList []apis.Step
+	stepList [][]apis.Step
 }
 
 func NewFlow() *Flow {
 	return &Flow{
-		stepList: make([]apis.Step, 0),
+		stepList: make([][]apis.Step, 0),
 	}
 }
 
@@ -25,7 +25,7 @@ func NewFlow() *Flow {
 // @Author ZhangHao
 // @Date 2022-06-09 14:49:23
 func (f *Flow) AddStep(step apis.Step) {
-	f.stepList = append(f.stepList, step)
+	f.stepList = append(f.stepList, []apis.Step{step})
 	glog.V(7).Infof("flow add step %s", step.Title())
 }
 
@@ -44,8 +44,10 @@ func (f *Flow) Count() int {
 func (f *Flow) Start() apis.StepChan {
 	var stepChan apis.StepChan
 	for _, item := range f.stepList {
-		stepChan = item.Start(stepChan)
-		glog.V(7).Infof("step %s has start", item.Title())
+		for _, itemStep := range item {
+			stepChan = itemStep.Start(stepChan)
+			glog.V(7).Infof("step %s has start", itemStep.Title())
+		}
 	}
 	return stepChan
 }
@@ -56,7 +58,9 @@ func (f *Flow) Start() apis.StepChan {
 // @Date 2022-06-09 14:50:34
 func (f *Flow) Wait() {
 	for _, item := range f.stepList {
-		<-item.Done()
-		glog.V(7).Infof("step %s has done", item.Title())
+		for _, itemStep := range item {
+			<-itemStep.Done()
+			glog.V(7).Infof("step %s has done", itemStep.Title())
+		}
 	}
 }
