@@ -1,4 +1,4 @@
-package multisteps
+package multi_step
 
 import (
 	"github.com/golang/glog"
@@ -20,6 +20,10 @@ func (d *multiSteps) Title() string {
 	return d.title
 }
 
+// Start
+// @Description start this step, and start all processor in step
+// @Author AlpheJang
+// @Date 2022-06-16 14:25:28
 func (d *multiSteps) Start(in apis.StepChan) apis.StepChan {
 	d.done = make(chan struct{})
 	out := make(apis.StepChan, d.bufSize)
@@ -50,7 +54,11 @@ func (d *multiSteps) Done() <-chan struct{} {
 	return d.done
 }
 
-func NewMultiSteps(title string, processors []apis.Processor, bufSize, processCount int) apis.Step {
+func (d *multiSteps) AddProcessor(processor apis.Processor) {
+	d.processors = append(d.processors, processor)
+}
+
+func NewMultiStep(title string, processors []apis.Processor, bufSize, processCount int) apis.Step {
 	if bufSize == 0 {
 		bufSize = 1
 	}
