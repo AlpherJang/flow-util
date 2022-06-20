@@ -1,7 +1,7 @@
 package flow
 
 import (
-	"github.com/golang/glog"
+	"go.uber.org/zap"
 	"gopkg.eicas.io/common/go-pkg/flow-util/apis"
 )
 
@@ -12,6 +12,7 @@ import (
 // @Date 2022-06-09 14:47:45
 type Flow struct {
 	stepList []apis.Step
+	logger   *zap.SugaredLogger
 }
 
 func NewFlow() *Flow {
@@ -26,7 +27,7 @@ func NewFlow() *Flow {
 // @Date 2022-06-09 14:49:23
 func (f *Flow) AddStep(step apis.Step) {
 	f.stepList = append(f.stepList, step)
-	glog.V(7).Infof("flow add step %s", step.Title())
+	f.logger.Infof("flow add step %s", step.Title())
 }
 
 // Count
@@ -45,7 +46,7 @@ func (f *Flow) Start() apis.StepChan {
 	var stepChan apis.StepChan
 	for _, item := range f.stepList {
 		stepChan = item.Start(stepChan)
-		glog.V(7).Infof("step %s has start", item.Title())
+		f.logger.Infof("step %s has start", item.Title())
 	}
 	return stepChan
 }
@@ -57,6 +58,6 @@ func (f *Flow) Start() apis.StepChan {
 func (f *Flow) Wait() {
 	for _, item := range f.stepList {
 		<-item.Done()
-		glog.V(7).Infof("step %s has done", item.Title())
+		f.logger.Infof("step %s has done", item.Title())
 	}
 }
